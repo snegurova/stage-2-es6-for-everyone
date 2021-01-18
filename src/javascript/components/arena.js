@@ -1,5 +1,6 @@
 import { createElement } from '../helpers/domHelper';
 import { createFighterImage } from './fighterPreview';
+import { fight } from './fight';
 
 export function renderArena(selectedFighters) {
   const root = document.getElementById('root');
@@ -11,13 +12,15 @@ export function renderArena(selectedFighters) {
   // todo:
   // - start the fight
   // - when fight is finished show winner
+  let winner;
+  fight(...selectedFighters).then(res => winner = res);
 }
 
 function createArena(selectedFighters) {
   const arena = createElement({ tagName: 'div', className: 'arena___root' });
   const healthIndicators = createHealthIndicators(...selectedFighters);
   const fighters = createFighters(...selectedFighters);
-  
+
   arena.append(healthIndicators, fighters);
   return arena;
 }
